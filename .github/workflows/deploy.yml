@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: tg-bot
+  IMAGE_NAME: ${{ github.repository }}
   CONTAINER_NAME: telegram-bot
 
 jobs:

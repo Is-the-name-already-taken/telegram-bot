@@ -36,9 +36,9 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
 
-          scp -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no telegram-bot.tar ${{ secrets.SERVER_USER }}@[${{ secrets.SERVER_HOST }}]:/home/${{ secrets.SERVER_USER }}/
+          scp -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no telegram-bot.tar ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/home/${{ secrets.SERVER_USER }}/
 
-          ssh -vv -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@[${{ secrets.SERVER_HOST }}] << 'EOF'
+          ssh -vv -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
             podman load -i /home/${{ secrets.SERVER_USER }}/telegram-bot.tar
             rm /home/${{ secrets.SERVER_USER }}/telegram-bot.tar
             

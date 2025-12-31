@@ -46,9 +46,10 @@ jobs:
       - name: Deploy to IPv6 Server
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: "[${{ secrets.SERVER_HOST }}]"
+          host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          protocol: tcp6
           port: 22
           script: |
             echo "${{ secrets.GITHUB_TOKEN }}" | podman login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin

@@ -27,7 +27,11 @@ def main():
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, reply))
 
     print("Bot is running...")
-    app.run_polling()
+
+    try:
+        app.run_polling()
+    except Exception as e:
+        print(f"Error occurred: {e}")
 
 
 if __name__ == "__main__":

@@ -49,17 +49,18 @@ jobs:
           chmod 600 private_key
 
           ssh -i private_key -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
-            # 서버 내부에서 실행될 커맨드들
             echo "${{ secrets.GITHUB_TOKEN }}" | podman login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
             podman pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             
             podman stop ${{ env.CONTAINER_NAME }} || true
             podman rm ${{ env.CONTAINER_NAME }} || true
+
+            mkdir -p /home/${{ secrets.SERVER_USER }}/apps/tg-bot
             
             podman run -d \
               --name ${{ env.CONTAINER_NAME }} \
               --network host \
-              --env-file /home/${{ secrets.SERVER_USER }}/apps/tg-bot/telegram-bot.env \
+              --env-file /home/${{ secrets.SERVER_USER }}/apps/tg-bot/.env \
               --restart always \
               ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
               

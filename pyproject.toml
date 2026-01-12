@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "python-telegram-bot>=22.5",
+    "sqlite-utils>=3.39",
 ]
 
 [dependency-groups]

@@ -61,6 +61,39 @@ class PupilHandler(Handler):
             return
         await BotAPI.reply(update, context, (self.pupils % 1)[0])
         
+    @command("hs", "pupil search")
+    async def hs_cmd(self, update, context):
+        args = await BotAPI.get_args(update, context)
+        arg = args[0] if args else None
+        if not arg:
+            await BotAPI.reply(update, context, "Usage: /hs <substring>")
+            return
+        
+        res = self.pupils @ arg
+        await BotAPI.reply(update, context, "\n".join(res))
+        
+    @command("hstart", "pupil startswith")
+    async def hstart_cmd(self, update, context):
+        args = await BotAPI.get_args(update, context)
+        arg = args[0] if args else None
+        if not arg:
+            await BotAPI.reply(update, context, "Usage: /hstart <prefix>")
+            return
+        
+        res = self.pupils ^ arg
+        await BotAPI.reply(update, context, "\n".join(res))
+        
+    @command("hend", "pupil endswith")
+    async def hend_cmd(self, update, context):
+        args = await BotAPI.get_args(update, context)
+        arg = args[0] if args else None
+        if not arg:
+            await BotAPI.reply(update, context, "Usage: /hend <suffix>")
+            return
+        
+        res = self.pupils / arg
+        await BotAPI.reply(update, context, "\n".join(res))
+        
     @callback("pupil_hl_next")
     async def pupil_hl_next_callback(self, update, context):
         query = await CallbackAPI.get_callback(update, context)
